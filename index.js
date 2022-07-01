@@ -37,15 +37,25 @@ async function run() {
             const id = req.params.id;
             const data = req.body;
             const filter = { _id: ObjectId(id) };
-            const options = { upsert: true }
+            const options = { upsert: true };
             const updateDoc = {
-                $set: {
-                    name: data.name,
-                },
-            }
+                $set: data,
+            };
             const cursor = await taskCollection.updateOne(filter, updateDoc, options);
             res.send(cursor);
         });
+
+        // app.put("/task/:id", async (req, res) => {
+        //     const id = req.params.id;
+        //     const data = req.body;
+        //     const filter = { _id: ObjectId(id) };
+        //     const options = { upsert: true };
+        //     const updateDoc = {
+        //       $set: data,
+        //     };
+        //     const cursor = await taskCollection.updateOne(filter, updateDoc, options);
+        //     res.send(cursor);
+        //   });
 
         //Delete a task
         app.delete('/task/:id', async (req, res) => {
